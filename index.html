@@ -558,7 +558,7 @@ footer{
 <!-- ──────────── HERO ──────────── -->
 <section id="home">
 <div class="hero">
-  <div class="hero-decor">Issue · 01 · MMXXVI</div>
+  <div class="hero-decor" id="last-updated">Issue · 01 · MMXXVI</div>
 
   <div class="hero-meta">
     <div class="hero-meta-block">Hyderabad · IN</div>
@@ -819,26 +819,6 @@ footer{
       </div>
       <span class="c-arrow">↗</span>
     </a>
-      <div>
-        <div class="c-label">— LinkedIn</div>
-        <div class="c-val">/in/srujan-sonu</div>
-      </div>
-      <span class="c-arrow">↗</span>
-    </a>
-    <a href="https://github.com/Live-stockify" class="c-row">
-      <div>
-        <div class="c-label">— GitHub</div>
-        <div class="c-val">Live-stockify</div>
-      </div>
-      <span class="c-arrow">↗</span>
-    </a>
-    <a href="https://instagram.com/nannorio" class="c-row">
-      <div>
-        <div class="c-label">— Instagram</div>
-        <div class="c-val">@nannorio</div>
-      </div>
-      <span class="c-arrow">↗</span>
-    </a>
   </div>
 </div>
 </section>
@@ -853,6 +833,21 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in') });
 },{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+<script>
+  // Fetch the latest commit date from your GitHub repo
+  fetch('https://api.github.com/repos/srujohn/srujanos-dev/commits/main')
+    .then(response => response.json())
+    .then(data => {
+      // Get the date and format it nicely
+      const commitDate = new Date(data.commit.committer.date);
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      const formattedDate = commitDate.toLocaleDateString('en-US', options).toUpperCase();
+      
+      // Inject it into the page
+      document.getElementById('last-updated').innerHTML = 'UPDATED &middot; ' + formattedDate;
+    })
+    .catch(error => console.error('Error fetching last update date:', error));
 </script>
 </body>
 </html>
