@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Edge AI on real farms. Enterprise NLP at scale. From Hyderabad.">
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,7 +50,8 @@
   --mono:'JetBrains Mono',monospace;
 }
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;
+  scroll-padding-top: 100px;}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -510,8 +511,17 @@ footer{
 
 /* ─── RESPONSIVE ─── */
 @media(max-width:780px){
-  nav{padding:0 1.25rem}
-  .nav-links{display:none}
+  nav{padding:0 1.25rem; gap: 1rem;}
+  .nav-links{
+    display:flex;
+    overflow-x:auto;
+    white-space:nowrap;
+    gap:1rem;
+    -ms-overflow-style:none; /* IE/Edge */
+    scrollbar-width:none; /* Firefox */
+  }
+  .nav-links::-webkit-scrollbar { display:none; /* Chrome/Safari */ }
+  .nav-logo-tld { display: none; /* Hides '.dev' on mobile to save space */ }
   .hero,.inner{padding-left:1.25rem;padding-right:1.25rem}
   .hero{padding-top:6rem}
   .hero-intro{grid-template-columns:1fr;gap:1rem}
@@ -671,7 +681,7 @@ footer{
         </div>
       </div>
       <div class="proj-arrow">↗</div>
-    </a>
+    </div>
 
     <div class="proj-row reveal d2">
       <div class="proj-num">→ 03</div>
@@ -689,7 +699,7 @@ footer{
         </div>
       </div>
       <div class="proj-arrow">↗</div>
-    </a>
+    </div>
 
   </div>
 </div>
@@ -788,7 +798,27 @@ footer{
       </div>
       <span class="c-arrow">↗</span>
     </a>
-    <a href="https://www.linkedin.com/in/srujan-sonu/" class="c-row">
+    <a href="https://www.linkedin.com/in/srujan-sonu/" target="_blank" rel="noopener noreferrer" class="c-row">
+      <div>
+        <div class="c-label">— LinkedIn</div>
+        <div class="c-val">/in/srujan-sonu</div>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://github.com/Live-stockify" target="_blank" rel="noopener noreferrer" class="c-row">
+      <div>
+        <div class="c-label">— GitHub</div>
+        <div class="c-val">Live-stockify</div>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://instagram.com/nannorio" target="_blank" rel="noopener noreferrer" class="c-row">
+      <div>
+        <div class="c-label">— Instagram</div>
+        <div class="c-val">@nannorio</div>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
       <div>
         <div class="c-label">— LinkedIn</div>
         <div class="c-val">/in/srujan-sonu</div>
