@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Srujan — AI Engineer, Mentor, Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=DM+Sans:ital,opsz,wght@0,9..40,300..600;1,9..40,300..400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* Palette — Editorial Modernist */
+  --paper:#F4EFE3;          /* warm parchment */
+  --paper-2:#EAE2CF;        /* slightly darker for surfaces */
+  --paper-3:#E0D5BC;        /* deepest cream */
+  --ink:#171410;            /* near-black, warm */
+  --ink-soft:#3A352D;       /* secondary text */
+  --ink-muted:#7A7368;      /* tertiary text */
+  --ink-faint:#B5AC9C;      /* borders, hints */
+  --rust:#B84A2A;           /* primary accent — terracotta */
+  --rust-deep:#8B3217;      /* darker rust for hover */
+  --rust-soft:#F0D9CE;      /* rust tint */
+  --olive:#5C6E47;          /* secondary accent — sage olive */
+  --gold:#A57A2C;           /* tertiary — warm gold */
+
+  /* Typography */
+  --display:'Fraunces',serif;
+  --body:'DM Sans',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+  font-feature-settings:"ss01","cv11";
+}
+
+/* Paper grain — barely perceptible, gives warmth */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  opacity:0.4;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:280px 280px;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:64px;
+  background:rgba(244,239,227,0.85);
+  backdrop-filter:blur(16px) saturate(1.2);
+  border-bottom:1px solid var(--ink-faint);
+}
+.nav-logo{
+  font-family:var(--display);font-weight:600;font-style:italic;
+  font-size:1.15rem;letter-spacing:-0.01em;
+  color:var(--ink);text-decoration:none;
+  display:flex;align-items:baseline;gap:0.3rem;
+}
+.nav-logo-tld{
+  font-family:var(--mono);font-style:normal;font-weight:400;
+  font-size:0.7rem;color:var(--rust);letter-spacing:0.05em;
+}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-family:var(--mono);font-size:0.72rem;
+  color:var(--ink-soft);text-decoration:none;
+  letter-spacing:0.04em;text-transform:lowercase;
+  transition:color 0.2s;position:relative;
+}
+.nav-links a::before{
+  content:'';position:absolute;left:0;right:0;bottom:-4px;height:1px;
+  background:var(--rust);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.25s ease;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::before{transform:scaleX(1)}
+.nav-cta{
+  display:flex;align-items:center;gap:0.45rem;
+  font-family:var(--mono);font-size:0.7rem;
+  padding:0.45rem 1rem;letter-spacing:0.04em;
+  border:1px solid var(--ink);border-radius:0;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  transition:all 0.2s;text-transform:lowercase;
+}
+.nav-cta:hover{background:var(--rust);border-color:var(--rust)}
+.nav-cta::before{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--rust);
+}
+.nav-cta:hover::before{background:var(--paper)}
+
+/* ─── SHARED ─── */
+section{position:relative;z-index:1}
+.inner{max-width:980px;margin:0 auto;padding:6rem 2.5rem}
+.section-num{
+  font-family:var(--mono);font-size:0.72rem;
+  letter-spacing:0.1em;color:var(--rust);
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;
+}
+.section-num::after{content:'';flex:1;height:1px;background:var(--ink-faint);max-width:60px}
+.section-title{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(2rem,4.2vw,3.2rem);
+  letter-spacing:-0.02em;line-height:1.05;
+  margin-bottom:3.5rem;
+  font-variation-settings:"SOFT" 50,"WONK" 0,"opsz" 96;
+}
+.section-title em{
+  font-style:italic;color:var(--rust);
+  font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 96;
+}
+
+hr.rule{
+  border:none;height:1px;
+  background:linear-gradient(to right,transparent 0%,var(--ink-faint) 15%,var(--ink-faint) 85%,transparent 100%);
+  margin:0;
+}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr;
+  align-content:center;
+  padding:7rem 2.5rem 5rem;
+  max-width:980px;margin:0 auto;
+  position:relative;
+}
+.hero-meta{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:2.5rem;
+}
+.hero-meta-block{
+  font-family:var(--mono);font-size:0.7rem;
+  letter-spacing:0.08em;color:var(--ink-muted);
+  text-transform:uppercase;
+}
+.hero-meta-divider{
+  width:30px;height:1px;background:var(--ink-faint);
+}
+.hero h1{
+  font-family:var(--display);
+  font-weight:300;
+  font-size:clamp(3rem,8.5vw,7rem);
+  line-height:0.92;letter-spacing:-0.04em;
+  margin-bottom:2.5rem;
+  font-variation-settings:"SOFT" 30,"WONK" 0,"opsz" 144;
+}
+.hero h1 .l1{color:var(--ink);font-weight:200}
+.hero h1 .l2{
+  font-style:italic;font-weight:400;color:var(--rust);
+  font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 144;
+}
+.hero h1 .l3{
+  color:var(--ink);font-weight:500;
+  font-variation-settings:"SOFT" 30,"WONK" 0,"opsz" 144;
+}
+.hero h1 .amp{
+  font-family:var(--display);font-style:italic;
+  color:var(--rust);font-weight:300;opacity:0.6;
+  font-variation-settings:"WONK" 1;
+  margin:0 0.15em;
+}
+
+.hero-intro{
+  display:grid;grid-template-columns:80px 1fr;gap:2rem;
+  max-width:680px;margin-bottom:3rem;
+}
+.hero-intro-mark{
+  font-family:var(--display);font-style:italic;
+  font-size:0.75rem;color:var(--rust);
+  letter-spacing:0.06em;text-transform:uppercase;
+  padding-top:0.4rem;border-top:1px solid var(--rust);
+}
+.hero-intro p{
+  font-size:1.1rem;color:var(--ink-soft);
+  line-height:1.7;font-weight:300;
+}
+.hero-intro p strong{
+  color:var(--ink);font-weight:500;
+  font-family:var(--display);
+  font-style:italic;
+}
+
+.hero-actions{display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center}
+.cta-primary{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  padding:0.85rem 1.5rem;
+  background:var(--ink);color:var(--paper);
+  font-family:var(--mono);font-size:0.78rem;font-weight:400;
+  letter-spacing:0.04em;text-transform:lowercase;
+  border:none;text-decoration:none;
+  transition:all 0.2s;cursor:pointer;
+}
+.cta-primary:hover{background:var(--rust)}
+.cta-primary::after{content:'→';font-size:0.95rem}
+.cta-secondary{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  padding:0.85rem 1.5rem;
+  background:transparent;color:var(--ink);
+  font-family:var(--mono);font-size:0.78rem;font-weight:400;
+  letter-spacing:0.04em;text-transform:lowercase;
+  border:1px solid var(--ink);text-decoration:none;
+  transition:all 0.2s;cursor:pointer;
+}
+.cta-secondary:hover{background:var(--ink);color:var(--paper)}
+
+.hero-decor{
+  position:absolute;top:8rem;right:2.5rem;
+  font-family:var(--display);font-style:italic;
+  font-size:0.7rem;color:var(--rust);
+  letter-spacing:0.08em;text-transform:uppercase;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  opacity:0.6;
+}
+
+/* ─── ABOUT ─── */
+.about-lede{
+  font-family:var(--display);
+  font-size:clamp(1.25rem,2.2vw,1.65rem);
+  line-height:1.4;font-weight:300;
+  color:var(--ink);
+  max-width:680px;margin-bottom:3rem;
+  font-style:italic;
+  font-variation-settings:"SOFT" 80;
+}
+.about-lede::first-letter{
+  font-size:3.2em;float:left;
+  line-height:0.85;padding:0.05em 0.1em 0 0;
+  color:var(--rust);font-weight:500;font-style:normal;
+}
+
+.id-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border-top:1px solid var(--ink-faint);
+  border-bottom:1px solid var(--ink-faint);
+  margin-bottom:3rem;
+}
+.id-cell{
+  padding:1.75rem 1.5rem;
+  border-right:1px solid var(--ink-faint);
+}
+.id-cell:last-child{border-right:none}
+.id-cell-tag{
+  font-family:var(--mono);font-size:0.65rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--rust);margin-bottom:0.9rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.id-cell-num{
+  background:var(--rust);color:var(--paper);
+  padding:0.1rem 0.4rem;font-size:0.62rem;
+}
+.id-cell-title{
+  font-family:var(--display);font-weight:500;font-size:1.3rem;
+  letter-spacing:-0.015em;margin-bottom:0.5rem;
+  font-variation-settings:"opsz" 36;
+}
+.id-cell-desc{font-size:0.88rem;color:var(--ink-soft);line-height:1.6}
+
+.stack-block{
+  background:var(--paper-2);
+  padding:1.75rem 2rem;
+  border:1px solid var(--ink-faint);
+  position:relative;
+}
+.stack-label{
+  font-family:var(--mono);font-size:0.68rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink-muted);margin-bottom:1rem;
+}
+.stack-pills{display:flex;flex-wrap:wrap;gap:0.45rem}
+.spill{
+  font-family:var(--mono);font-size:0.72rem;
+  padding:0.32rem 0.7rem;
+  background:var(--paper);
+  border:1px solid var(--ink-faint);
+  color:var(--ink-soft);letter-spacing:0.02em;
+  transition:all 0.2s;
+}
+.spill:hover{border-color:var(--rust);color:var(--rust);background:var(--rust-soft)}
+
+/* ─── WORK ─── */
+.proj-list{display:flex;flex-direction:column}
+.proj-row{
+  display:grid;grid-template-columns:60px 1fr auto;
+  gap:2.5rem;padding:2.25rem 0;
+  border-top:1px solid var(--ink-faint);
+  text-decoration:none;color:inherit;
+  align-items:start;
+  transition:padding 0.25s ease;
+}
+.proj-row:last-child{border-bottom:1px solid var(--ink-faint)}
+.proj-row:hover{padding-left:1rem}
+.proj-row:hover .proj-name{color:var(--rust)}
+.proj-num{
+  font-family:var(--mono);font-size:0.75rem;
+  color:var(--rust);letter-spacing:0.04em;padding-top:0.55rem;
+}
+.proj-body{max-width:580px}
+.proj-meta{
+  font-family:var(--mono);font-size:0.68rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink-muted);margin-bottom:0.5rem;
+}
+.proj-name{
+  font-family:var(--display);font-weight:500;font-size:1.55rem;
+  line-height:1.15;letter-spacing:-0.02em;
+  margin-bottom:0.75rem;
+  font-variation-settings:"opsz" 60;
+  transition:color 0.25s;
+}
+.proj-name em{
+  font-style:italic;color:var(--rust);
+  font-variation-settings:"WONK" 1;
+}
+.proj-desc{
+  font-size:0.95rem;color:var(--ink-soft);
+  line-height:1.65;margin-bottom:1rem;
+}
+.proj-chips{display:flex;flex-wrap:wrap;gap:0.4rem}
+.pchip{
+  font-family:var(--mono);font-size:0.66rem;
+  padding:0.22rem 0.55rem;
+  background:transparent;
+  border:1px solid var(--ink-faint);
+  color:var(--ink-muted);letter-spacing:0.02em;
+}
+.proj-arrow{
+  font-family:var(--display);font-size:1.5rem;font-weight:300;
+  color:var(--ink-muted);padding-top:0.4rem;
+  transition:all 0.25s;
+}
+.proj-row:hover .proj-arrow{color:var(--rust);transform:translate(4px,-4px)}
+
+/* ─── WRITING ─── */
+.blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.blog-card{
+  padding:2rem;
+  border:1px solid var(--ink-faint);
+  margin:-0.5px;
+  background:var(--paper);
+  transition:all 0.25s;cursor:pointer;
+  position:relative;
+}
+.blog-card:hover{background:var(--paper-2)}
+.blog-card:hover .blog-arrow{transform:translate(3px,-3px);color:var(--rust)}
+.blog-meta{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:1.25rem;
+}
+.blog-date{
+  font-family:var(--mono);font-size:0.66rem;
+  color:var(--ink-muted);letter-spacing:0.06em;text-transform:uppercase;
+}
+.blog-tag-mini{
+  font-family:var(--mono);font-size:0.66rem;
+  padding:0.18rem 0.5rem;
+  background:var(--rust);color:var(--paper);
+  letter-spacing:0.03em;
+}
+.blog-title{
+  font-family:var(--display);font-weight:500;
+  font-size:1.2rem;line-height:1.25;
+  letter-spacing:-0.015em;margin-bottom:0.65rem;
+  font-variation-settings:"opsz" 36;
+}
+.blog-excerpt{
+  font-size:0.88rem;color:var(--ink-soft);
+  line-height:1.55;margin-bottom:1.25rem;
+}
+.blog-arrow{
+  font-family:var(--display);font-size:1.1rem;
+  color:var(--ink-muted);transition:all 0.25s;
+  display:inline-block;
+}
+
+/* ─── NANNORIO ─── */
+.nn-spread{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;border:1px solid var(--ink);
+  background:var(--ink);
+}
+.nn-left{
+  background:var(--ink);color:var(--paper);
+  padding:3rem 2.5rem;
+}
+.nn-handle{
+  font-family:var(--mono);font-size:0.7rem;
+  letter-spacing:0.08em;color:var(--rust-soft);
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;
+}
+.nn-handle::before{
+  content:'';width:8px;height:8px;border-radius:50%;background:var(--rust);
+}
+.nn-title-big{
+  font-family:var(--display);font-weight:300;
+  font-size:clamp(1.8rem,3.5vw,2.6rem);
+  line-height:1.05;letter-spacing:-0.025em;
+  color:var(--paper);
+  font-variation-settings:"SOFT" 60,"opsz" 96;
+  margin-bottom:1.25rem;
+}
+.nn-title-big em{
+  font-style:italic;color:var(--rust-soft);
+  font-variation-settings:"WONK" 1;
+}
+.nn-desc{
+  font-size:0.92rem;color:rgba(244,239,227,0.65);
+  line-height:1.7;font-weight:300;
+}
+.nn-right{
+  background:var(--paper);padding:2.5rem;
+  display:flex;flex-direction:column;justify-content:center;gap:0.85rem;
+}
+.nn-item{
+  font-family:var(--body);font-size:0.88rem;
+  color:var(--ink-soft);line-height:1.5;
+  padding:0.85rem 0;border-bottom:1px solid var(--ink-faint);
+  display:flex;align-items:flex-start;gap:0.85rem;
+}
+.nn-item:last-child{border-bottom:none}
+.nn-item-num{
+  font-family:var(--mono);font-size:0.65rem;
+  color:var(--rust);letter-spacing:0.05em;
+  padding-top:2px;flex-shrink:0;
+}
+
+/* ─── CONTACT ─── */
+.contact-intro{
+  font-family:var(--display);font-style:italic;
+  font-size:1.15rem;color:var(--ink-soft);
+  line-height:1.55;font-weight:300;
+  max-width:520px;margin-bottom:2.5rem;
+}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid var(--ink-faint);
+}
+.c-row{
+  padding:1.5rem 1.75rem;
+  border-right:1px solid var(--ink-faint);
+  border-bottom:1px solid var(--ink-faint);
+  text-decoration:none;color:inherit;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background 0.2s;
+}
+.c-row:nth-child(2n){border-right:none}
+.c-row:nth-last-child(-n+2){border-bottom:none}
+.c-row:hover{background:var(--paper-2)}
+.c-row:hover .c-arrow{color:var(--rust);transform:translate(2px,-2px)}
+.c-label{
+  font-family:var(--mono);font-size:0.66rem;
+  color:var(--ink-muted);letter-spacing:0.08em;
+  text-transform:uppercase;margin-bottom:0.3rem;
+}
+.c-val{
+  font-family:var(--display);font-weight:500;
+  font-size:1rem;color:var(--ink);letter-spacing:-0.01em;
+}
+.c-arrow{
+  font-family:var(--display);font-size:1.1rem;
+  color:var(--ink-muted);transition:all 0.25s;
+}
+
+/* ─── FOOTER ─── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--ink-faint);
+  padding:2rem 2.5rem;
+  max-width:980px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.f-l{
+  font-family:var(--mono);font-size:0.7rem;
+  color:var(--ink-muted);letter-spacing:0.03em;
+}
+.f-l strong{color:var(--rust);font-weight:400}
+.f-r{
+  font-family:var(--display);font-style:italic;
+  font-size:0.85rem;color:var(--ink-muted);
+}
+
+/* ─── REVEAL ANIMATION ─── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:780px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  .hero,.inner{padding-left:1.25rem;padding-right:1.25rem}
+  .hero{padding-top:6rem}
+  .hero-intro{grid-template-columns:1fr;gap:1rem}
+  .hero-decor{display:none}
+  .id-grid{grid-template-columns:1fr}
+  .id-cell{border-right:none;border-bottom:1px solid var(--ink-faint)}
+  .id-cell:last-child{border-bottom:none}
+  .proj-row{grid-template-columns:40px 1fr;gap:1rem}
+  .proj-arrow{display:none}
+  .blog-grid,.contact-grid{grid-template-columns:1fr}
+  .blog-card{margin:0;border-bottom:none}
+  .blog-card:last-child{border-bottom:1px solid var(--ink-faint)}
+  .c-row{border-right:none}
+  .c-row:nth-last-child(-n+2){border-bottom:1px solid var(--ink-faint)}
+  .c-row:last-child{border-bottom:none}
+  .nn-spread{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Srujan<span class="nav-logo-tld">.dev</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#work">work</a></li>
+    <li><a href="#writing">writing</a></li>
+    <li><a href="#nannorio">nannorio</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">say hello</a>
+</nav>
+
+<!-- ──────────── HERO ──────────── -->
+<section id="home">
+<div class="hero">
+  <div class="hero-decor">Issue · 01 · MMXXVI</div>
+
+  <div class="hero-meta">
+    <div class="hero-meta-block">Hyderabad · IN</div>
+    <div class="hero-meta-divider"></div>
+    <div class="hero-meta-block">Open to applied scientist roles</div>
+  </div>
+
+  <h1>
+    <span class="l1">Engineer,</span><br>
+    <span class="l2">mentor,</span><br>
+    <span class="l3">builder<span class="amp">&</span>writer.</span>
+  </h1>
+
+  <div class="hero-intro">
+    <div class="hero-intro-mark">A note</div>
+    <p>
+      I build <strong>AI systems</strong> that work outside the lab — from edge-deployed computer vision on poultry farms to enterprise NLP pipelines at S&amp;P Global. I mentor the next wave of agritech engineers at <strong>LiveStockify</strong>, and I write about what I learn along the way.
+    </p>
+  </div>
+
+  <div class="hero-actions">
+    <a href="#work" class="cta-primary">explore my work</a>
+    <a href="#writing" class="cta-secondary">read the blog</a>
+  </div>
+</div>
+</section>
+
+<hr class="rule">
+
+<!-- ──────────── ABOUT ──────────── -->
+<section id="about">
+<div class="inner">
+  <div class="section-num">§ 01 — Who I am</div>
+  <h2 class="section-title">An engineer with roots<br>in the <em>real world</em>.</h2>
+
+  <p class="about-lede reveal">
+    I care about systems that actually run — on constrained hardware, against messy data, in places far from the cloud. The interesting problems are the ones the demos never show.
+  </p>
+
+  <div class="id-grid reveal d1">
+    <div class="id-cell">
+      <div class="id-cell-tag"><span class="id-cell-num">01</span>Engineer</div>
+      <div class="id-cell-title">S&amp;P Global</div>
+      <div class="id-cell-desc">Senior AI/ML Engineer on Enterprise Technology. AWS Step Functions, OpenSearch, Azure OpenAI — five years of shipping systems that scale to the enterprise.</div>
+    </div>
+    <div class="id-cell">
+      <div class="id-cell-tag"><span class="id-cell-num">02</span>Mentor</div>
+      <div class="id-cell-title">LiveStockify</div>
+      <div class="id-cell-desc">Co-founder and mentor. Guide a team of engineers building AI-powered poultry behavioral monitoring at the edge — agritech meets deep learning, live on real farms.</div>
+    </div>
+    <div class="id-cell">
+      <div class="id-cell-tag"><span class="id-cell-num">03</span>Builder</div>
+      <div class="id-cell-title">Research &amp; beyond</div>
+      <div class="id-cell-desc">Targeting Applied Scientist roles at Amazon Science, Microsoft MAI, and Sarvam AI. Publishing VLM work on HuggingFace and arXiv workshop tracks.</div>
+    </div>
+  </div>
+
+  <div class="stack-block reveal d2">
+    <div class="stack-label">— Tools of the trade</div>
+    <div class="stack-pills">
+      <span class="spill">Python</span>
+      <span class="spill">YOLOv8</span>
+      <span class="spill">FastAPI</span>
+      <span class="spill">AWS Lambda</span>
+      <span class="spill">OpenSearch</span>
+      <span class="spill">Azure OpenAI</span>
+      <span class="spill">Step Functions</span>
+      <span class="spill">Raspberry Pi 5</span>
+      <span class="spill">Ollama</span>
+      <span class="spill">Moondream 2B</span>
+      <span class="spill">LoRA</span>
+      <span class="spill">Docker</span>
+      <span class="spill">PyTorch</span>
+      <span class="spill">Tailscale</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="rule">
+
+<!-- ──────────── WORK ──────────── -->
+<section id="work">
+<div class="inner">
+  <div class="section-num">§ 02 — Selected work</div>
+  <h2 class="section-title">Things I've <em>shipped</em>.</h2>
+
+  <div class="proj-list">
+
+    <a href="#" class="proj-row reveal">
+      <div class="proj-num">→ 01</div>
+      <div class="proj-body">
+        <div class="proj-meta">Agritech · Edge AI · Startup</div>
+        <div class="proj-name">LiveStockify — <em>poultry behavior monitor</em></div>
+        <div class="proj-desc">End-to-end YOLOv8 system detecting Eating, Drinking, Sitting, and Standing across 923 broiler birds on 8 RTSP cameras. Live on Raspberry Pi 5 via Tailscale VPN. FastAPI backend with API key auth. Mentoring three engineers building on top of this foundation.</div>
+        <div class="proj-chips">
+          <span class="pchip">YOLOv8</span>
+          <span class="pchip">Raspberry Pi 5</span>
+          <span class="pchip">FastAPI</span>
+          <span class="pchip">RTSP</span>
+          <span class="pchip">Tailscale</span>
+          <span class="pchip">mAP50 0.454</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a href="#" class="proj-row reveal d1">
+      <div class="proj-num">→ 02</div>
+      <div class="proj-body">
+        <div class="proj-meta">Enterprise · AWS · NLP</div>
+        <div class="proj-name">Contract Terms Tracker — <em>S&amp;P Global</em></div>
+        <div class="proj-desc">AWS Step Functions pipeline integrating Lambda, OpenSearch vector search, and Azure OpenAI. Reduced search latency from 9s to 5.5s via concurrent LLM summarization, embedding caching, smart k-amplification, and ef_search tuning. Comprehensive S3 failure tagging across all pipeline lambdas.</div>
+        <div class="proj-chips">
+          <span class="pchip">AWS Lambda</span>
+          <span class="pchip">OpenSearch</span>
+          <span class="pchip">Azure OpenAI</span>
+          <span class="pchip">Step Functions</span>
+          <span class="pchip">FastAPI</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a href="#" class="proj-row reveal d2">
+      <div class="proj-num">→ 03</div>
+      <div class="proj-body">
+        <div class="proj-meta">Research · VLM · Edge</div>
+        <div class="proj-name">LiveStockify Vision — <em>VLM phase</em></div>
+        <div class="proj-desc">Docker Compose stack with Ollama and FastAPI running Moondream 2B as a broiler farm inspector. ~2.4s per image on Apple Silicon. LoRA fine-tuning underway, with an arXiv workshop paper (CV4Animals / Agriculture-Vision) and HuggingFace release in progress.</div>
+        <div class="proj-chips">
+          <span class="pchip">Moondream 2B</span>
+          <span class="pchip">Ollama</span>
+          <span class="pchip">LoRA</span>
+          <span class="pchip">Docker</span>
+          <span class="pchip">VLM</span>
+          <span class="pchip">arXiv</span>
+        </div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+  </div>
+</div>
+</section>
+
+<hr class="rule">
+
+<!-- ──────────── WRITING ──────────── -->
+<section id="writing">
+<div class="inner">
+  <div class="section-num">§ 03 — Writing</div>
+  <h2 class="section-title">Thinking <em>out loud</em>.</h2>
+
+  <div class="blog-grid">
+    <div class="blog-card reveal">
+      <div class="blog-meta">
+        <span class="blog-date">— Coming soon</span>
+        <span class="blog-tag-mini">edge ai</span>
+      </div>
+      <div class="blog-title">Deploying YOLOv8 on Raspberry Pi 5 — what nobody tells you</div>
+      <div class="blog-excerpt">RTSP streams, Tailscale VPN, and 923 live chickens. What I learned about real edge deployment.</div>
+      <span class="blog-arrow">→ Read</span>
+    </div>
+    <div class="blog-card reveal d1">
+      <div class="blog-meta">
+        <span class="blog-date">— Coming soon</span>
+        <span class="blog-tag-mini">engineering</span>
+      </div>
+      <div class="blog-title">Cutting OpenSearch latency in half: a field guide</div>
+      <div class="blog-excerpt">How concurrent LLM calls, embedding caches, and ef_search tuning took us from 9s to 5.5s.</div>
+      <span class="blog-arrow">→ Read</span>
+    </div>
+    <div class="blog-card reveal d1">
+      <div class="blog-meta">
+        <span class="blog-date">— Coming soon</span>
+        <span class="blog-tag-mini">mentorship</span>
+      </div>
+      <div class="blog-title">Mentoring junior engineers in a startup — what actually works</div>
+      <div class="blog-excerpt">Lessons from building and guiding a small agritech CV team from zero to live farm deployment.</div>
+      <span class="blog-arrow">→ Read</span>
+    </div>
+    <div class="blog-card reveal d2">
+      <div class="blog-meta">
+        <span class="blog-date">— Coming soon</span>
+        <span class="blog-tag-mini">career</span>
+      </div>
+      <div class="blog-title">The 2026 AI/ML job market in Hyderabad — honest research</div>
+      <div class="blog-excerpt">Staying vs. leaving, research visibility, and targeting Applied Scientist roles at the big names.</div>
+      <span class="blog-arrow">→ Read</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="rule">
+
+<!-- ──────────── NANNORIO ──────────── -->
+<section id="nannorio">
+<div class="inner">
+  <div class="section-num">§ 04 — Personal</div>
+  <h2 class="section-title">Life beyond the <em>terminal</em>.</h2>
+
+  <div class="nn-spread reveal">
+    <div class="nn-left">
+      <div class="nn-handle">@nannorio · Instagram</div>
+      <div class="nn-title-big">Telugu traditions<br>meet <em>modern science.</em></div>
+      <div class="nn-desc">A Telugu father documenting his daughter's first years — evidence-based, culturally rooted, and honest. Where ancient wisdom and peer-reviewed research share the same feed.</div>
+    </div>
+    <div class="nn-right">
+      <div class="nn-item"><span class="nn-item-num">→ 01</span>Six-month milestones — what the research actually says.</div>
+      <div class="nn-item"><span class="nn-item-num">→ 02</span>Introducing solids — Ayurveda meets the WHO.</div>
+      <div class="nn-item"><span class="nn-item-num">→ 03</span>Baby in unexpected context — the viral Reel formula.</div>
+      <div class="nn-item"><span class="nn-item-num">→ 04</span>First home, first daughter — same chapter of life.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="rule">
+
+<!-- ──────────── CONTACT ──────────── -->
+<section id="contact">
+<div class="inner">
+  <div class="section-num">§ 05 — Get in touch</div>
+  <h2 class="section-title">Let's build<br>something <em>real</em>.</h2>
+
+  <p class="contact-intro">
+    I'm always open to thoughtful conversations — about AI, agritech, building careful systems, or anything in between.
+  </p>
+
+  <div class="contact-grid reveal">
+    <a href="mailto:heywhatifai@gmail.com" class="c-row">
+      <div>
+        <div class="c-label">— Email</div>
+        <div class="c-val">heywhatifai@gmail.com</div>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://www.linkedin.com/in/srujan-sonu/" class="c-row">
+      <div>
+        <div class="c-label">— LinkedIn</div>
+        <div class="c-val">/in/srujan-sonu</div>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://github.com/Live-stockify" class="c-row">
+      <div>
+        <div class="c-label">— GitHub</div>
+        <div class="c-val">Live-stockify</div>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
+    <a href="https://instagram.com/nannorio" class="c-row">
+      <div>
+        <div class="c-label">— Instagram</div>
+        <div class="c-val">@nannorio</div>
+      </div>
+      <span class="c-arrow">↗</span>
+    </a>
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="f-l">srujan.dev · Hyderabad · <strong>MMXXVI</strong></div>
+  <div class="f-r">Built with intention.</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in') });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
