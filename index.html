@@ -20,8 +20,20 @@
 <meta name="twitter:title" content="Srujan — AI Engineer, Mentor, Builder">
 <meta name="twitter:description" content="Edge AI on real farms. Enterprise NLP at scale. From Hyderabad.">
 
+<meta name="theme-color" content="#F4EFE3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120E" media="(prefers-color-scheme: dark)">
+
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Set theme before first paint so dark readers never see a flash -->
+<script>
+(function(){
+  var t = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,10 +56,39 @@
   --olive:#5C6E47;          /* secondary accent — sage olive */
   --gold:#A57A2C;           /* tertiary — warm gold */
 
+  /* Surfaces derived from palette */
+  --nav-bg:rgba(244,239,227,0.85);
+  --grain-opacity:0.4;
+  --grain:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
   /* Typography */
   --display:'Fraunces',serif;
   --body:'DM Sans',sans-serif;
   --mono:'JetBrains Mono',monospace;
+}
+
+/* ─── NIGHT EDITION ─── */
+:root[data-theme="dark"]{
+  --paper:#14120E;
+  --paper-2:#1C1914;
+  --paper-3:#262119;
+  --ink:#F2EADA;
+  --ink-soft:#CBC2B0;
+  --ink-muted:#8E8676;
+  --ink-faint:#3C362C;
+  --rust:#E0734B;
+  --rust-deep:#F09165;
+  --rust-soft:#3B2117;
+  --olive:#93A874;
+  --gold:#D2A34F;
+  --nav-bg:rgba(20,18,14,0.85);
+  --grain-opacity:0.32;
+  --grain:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.92 0 0 0 0 0.85 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+html{color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark}
+body,nav,.stack-block,.blog-card,.c-row,.spill,.pchip{
+  transition:background-color 0.4s ease,color 0.4s ease,border-color 0.4s ease;
 }
 
 html{scroll-behavior:smooth;
@@ -65,8 +106,8 @@ body{
 /* Paper grain — barely perceptible, gives warmth */
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  opacity:0.4;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:var(--grain-opacity);
+  background-image:var(--grain);
   background-size:280px 280px;
 }
 
@@ -75,10 +116,36 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 2.5rem;height:64px;
-  background:rgba(244,239,227,0.85);
+  background:var(--nav-bg);
   backdrop-filter:blur(16px) saturate(1.2);
   border-bottom:1px solid var(--ink-faint);
 }
+/* reading progress — hairline under the nav */
+.progress{
+  position:fixed;top:63px;left:0;z-index:101;
+  height:2px;width:0;
+  background:linear-gradient(to right,var(--gold),var(--rust));
+  transition:width 0.1s linear;
+}
+.nav-right{display:flex;align-items:center;gap:0.9rem}
+.theme-toggle{
+  display:grid;place-items:center;
+  width:30px;height:30px;
+  background:transparent;border:1px solid var(--ink-faint);
+  color:var(--ink-soft);cursor:pointer;
+  font-size:0.85rem;line-height:1;
+  transition:all 0.2s;
+}
+.theme-toggle:hover{border-color:var(--rust);color:var(--rust)}
+.kbd-hint{
+  display:flex;align-items:center;gap:0.3rem;
+  font-family:var(--mono);font-size:0.62rem;
+  color:var(--ink-muted);letter-spacing:0.04em;
+  border:1px solid var(--ink-faint);
+  padding:0.35rem 0.55rem;cursor:pointer;
+  background:transparent;transition:all 0.2s;
+}
+.kbd-hint:hover{border-color:var(--rust);color:var(--rust)}
 .nav-logo{
   font-family:var(--display);font-weight:600;font-style:italic;
   font-size:1.15rem;letter-spacing:-0.01em;
@@ -101,8 +168,8 @@ nav{
   background:var(--rust);transform:scaleX(0);transform-origin:left;
   transition:transform 0.25s ease;
 }
-.nav-links a:hover{color:var(--ink)}
-.nav-links a:hover::before{transform:scaleX(1)}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.nav-links a:hover::before,.nav-links a.active::before{transform:scaleX(1)}
 .nav-cta{
   display:flex;align-items:center;gap:0.45rem;
   font-family:var(--mono);font-size:0.7rem;
@@ -154,9 +221,56 @@ hr.rule{
   max-width:980px;margin:0 auto;
   position:relative;
 }
+/* detection-box field — a nod to what I actually build */
+.hero-canvas{
+  position:absolute;inset:0;z-index:0;
+  pointer-events:none;opacity:0.5;
+}
+.hero-meta,.hero h1,.hero-intro,.hero-actions{position:relative;z-index:1}
+.hero-decor{z-index:1}
+
 .hero-meta{
   display:flex;align-items:center;gap:1rem;
-  margin-bottom:2.5rem;
+  margin-bottom:2.5rem;flex-wrap:wrap;
+}
+.hero-status{
+  display:flex;align-items:center;gap:0.5rem;
+}
+.hero-status .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--olive);flex-shrink:0;
+  box-shadow:0 0 0 0 var(--olive);
+  animation:pulse 2.4s ease-out infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(92,110,71,0.5)}
+  70%{box-shadow:0 0 0 7px rgba(92,110,71,0)}
+  100%{box-shadow:0 0 0 0 rgba(92,110,71,0)}
+}
+
+/* headline lines rise on load */
+.hero h1 span[class^="l"]{
+  display:inline-block;
+  opacity:0;transform:translateY(0.35em);
+  animation:rise 0.9s cubic-bezier(.22,.8,.3,1) forwards;
+}
+.hero h1 .l1{animation-delay:0.05s}
+.hero h1 .l2{animation-delay:0.17s}
+.hero h1 .l3{animation-delay:0.29s}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+/* rotating role in the intro mark */
+.rotator{
+  display:inline-block;color:var(--rust);
+  font-style:italic;
+}
+.rotator span{
+  display:inline-block;
+  animation:swap 0.5s ease;
+}
+@keyframes swap{
+  from{opacity:0;transform:translateY(-0.4em)}
+  to{opacity:1;transform:translateY(0)}
 }
 .hero-meta-block{
   font-family:var(--mono);font-size:0.7rem;
@@ -240,6 +354,60 @@ hr.rule{
   letter-spacing:0.08em;text-transform:uppercase;
   writing-mode:vertical-rl;transform:rotate(180deg);
   opacity:0.6;
+}
+
+/* ─── TICKER ─── */
+.ticker{
+  position:relative;z-index:1;
+  border-top:1px solid var(--ink-faint);
+  border-bottom:1px solid var(--ink-faint);
+  background:var(--paper-2);
+  overflow:hidden;padding:0.85rem 0;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
+}
+.ticker-track{
+  display:flex;width:max-content;
+  animation:slide 42s linear infinite;
+}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-item{
+  font-family:var(--mono);font-size:0.72rem;
+  letter-spacing:0.09em;text-transform:uppercase;
+  color:var(--ink-soft);
+  padding:0 1.5rem;white-space:nowrap;
+  display:flex;align-items:center;gap:1.5rem;
+}
+.ticker-item::after{
+  content:'✦';color:var(--rust);font-size:0.65rem;
+}
+.ticker-item b{color:var(--rust);font-weight:500}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ─── NUMBERS ─── */
+.numbers{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--ink-faint);
+  margin-bottom:3rem;background:var(--paper-2);
+}
+.num-cell{
+  padding:1.6rem 1.25rem;
+  border-right:1px solid var(--ink-faint);
+}
+.num-cell:last-child{border-right:none}
+.num-val{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(1.8rem,3.4vw,2.5rem);
+  line-height:1;letter-spacing:-0.03em;
+  color:var(--ink);margin-bottom:0.5rem;
+  font-variation-settings:"SOFT" 40,"opsz" 96;
+  font-variant-numeric:tabular-nums;
+}
+.num-val .suffix{color:var(--rust);font-style:italic;font-size:0.62em;margin-left:0.12em}
+.num-label{
+  font-family:var(--mono);font-size:0.63rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--ink-muted);line-height:1.5;
 }
 
 /* ─── ABOUT ─── */
@@ -362,11 +530,28 @@ hr.rule{
 .proj-row:hover .proj-arrow{color:var(--rust);transform:translate(4px,-4px)}
 
 /* ─── WRITING ─── */
-.blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.blog-card{
-  transition:all 0.25s;
+.blog-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid var(--ink-faint);
 }
+.blog-card{
+  padding:1.9rem 1.75rem;
+  border-right:1px solid var(--ink-faint);
+  border-bottom:1px solid var(--ink-faint);
+  position:relative;
+  transition:background 0.25s;
+}
+.blog-card:nth-child(2n){border-right:none}
+.blog-card:nth-last-child(-n+2){border-bottom:none}
+.blog-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--rust);transform:scaleY(0);transform-origin:top;
+  transition:transform 0.3s ease;
+}
+.blog-card:hover::before{transform:scaleY(1)}
 .blog-card:hover{background:var(--paper-2)}
+.blog-card:hover .blog-title{color:var(--rust)}
+.blog-title{transition:color 0.25s}
 .blog-card:hover .blog-arrow{transform:translate(3px,-3px);color:var(--rust)}
 .blog-meta{
   display:flex;justify-content:space-between;align-items:baseline;
@@ -429,7 +614,8 @@ hr.rule{
   font-variation-settings:"WONK" 1;
 }
 .nn-desc{
-  font-size:0.92rem;color:rgba(244,239,227,0.65);
+  font-size:0.92rem;
+  color:var(--paper);opacity:0.68;  /* inverts with the block, not against it */
   line-height:1.7;font-weight:300;
 }
 .nn-right{
@@ -509,6 +695,75 @@ footer{
 .reveal.in{opacity:1;transform:translateY(0)}
 .d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}
 
+/* ─── COMMAND PALETTE ─── */
+.cmdk{
+  position:fixed;inset:0;z-index:200;
+  display:none;justify-content:center;align-items:flex-start;
+  padding-top:14vh;
+  background:rgba(23,20,16,0.45);
+  backdrop-filter:blur(4px);
+}
+.cmdk.open{display:flex}
+.cmdk-box{
+  width:min(520px,92vw);
+  background:var(--paper);
+  border:1px solid var(--ink);
+  box-shadow:0 24px 60px rgba(23,20,16,0.28);
+  animation:cmdk-in 0.18s ease;
+}
+@keyframes cmdk-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.cmdk-input{
+  width:100%;padding:1.1rem 1.25rem;
+  border:none;border-bottom:1px solid var(--ink-faint);
+  background:transparent;color:var(--ink);
+  font-family:var(--mono);font-size:0.85rem;
+  outline:none;
+}
+.cmdk-input::placeholder{color:var(--ink-muted)}
+.cmdk-list{list-style:none;max-height:46vh;overflow-y:auto}
+.cmdk-item{
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:0.8rem 1.25rem;cursor:pointer;
+  border-bottom:1px solid var(--ink-faint);
+}
+.cmdk-item:last-child{border-bottom:none}
+.cmdk-item[aria-selected="true"]{background:var(--paper-2)}
+.cmdk-item[aria-selected="true"] .cmdk-name{color:var(--rust)}
+.cmdk-name{
+  font-family:var(--display);font-weight:500;font-size:0.98rem;
+  letter-spacing:-0.01em;
+}
+.cmdk-kind{
+  font-family:var(--mono);font-size:0.62rem;
+  letter-spacing:0.09em;text-transform:uppercase;
+  color:var(--ink-muted);
+}
+.cmdk-foot{
+  padding:0.6rem 1.25rem;
+  border-top:1px solid var(--ink-faint);
+  font-family:var(--mono);font-size:0.62rem;
+  color:var(--ink-muted);letter-spacing:0.05em;
+  display:flex;gap:1.1rem;
+}
+.cmdk-empty{
+  padding:1.5rem 1.25rem;
+  font-family:var(--display);font-style:italic;
+  color:var(--ink-muted);font-size:0.95rem;
+}
+
+/* ─── MOTION PREFERENCES ─── */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:0.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+  }
+  .reveal{opacity:1;transform:none}
+  .hero h1 span[class^="l"]{opacity:1;transform:none}
+  .hero-canvas{display:none}
+}
+
 /* ─── RESPONSIVE ─── */
 @media(max-width:780px){
   nav{padding:0 1.25rem; gap: 1rem;}
@@ -532,8 +787,14 @@ footer{
   .proj-row{grid-template-columns:40px 1fr;gap:1rem}
   .proj-arrow{display:none}
   .blog-grid,.contact-grid{grid-template-columns:1fr}
-  .blog-card{margin:0;border-bottom:none}
-  .blog-card:last-child{border-bottom:1px solid var(--ink-faint)}
+  .blog-card{border-right:none}
+  .blog-card:nth-last-child(-n+2){border-bottom:1px solid var(--ink-faint)}
+  .blog-card:last-child{border-bottom:none}
+  .numbers{grid-template-columns:1fr 1fr}
+  .num-cell:nth-child(2n){border-right:none}
+  .num-cell:nth-child(-n+2){border-bottom:1px solid var(--ink-faint)}
+  .kbd-hint{display:none}
+  .hero-meta{gap:0.7rem}
   .c-row{border-right:none}
   .c-row:nth-last-child(-n+2){border-bottom:1px solid var(--ink-faint)}
   .c-row:last-child{border-bottom:none}
@@ -552,16 +813,24 @@ footer{
     <li><a href="#writing">writing</a></li>
     <li><a href="#nannorio">nannorio</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">say hello</a>
+  <div class="nav-right">
+    <button class="kbd-hint" id="cmdk-open" aria-label="Open command palette">
+      <span id="cmdk-key">⌘</span>K
+    </button>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle night edition">☾</button>
+    <a href="#contact" class="nav-cta">say hello</a>
+  </div>
 </nav>
+<div class="progress" id="progress"></div>
 
 <!-- ──────────── HERO ──────────── -->
 <section id="home">
 <div class="hero">
+  <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-decor" id="last-updated">Issue · 01 · MMXXVI</div>
 
   <div class="hero-meta">
-    <div class="hero-meta-block">Hyderabad · IN</div>
+    <div class="hero-meta-block hero-status"><span class="dot"></span><span id="local-time">Hyderabad · IN</span></div>
     <div class="hero-meta-divider"></div>
     <div class="hero-meta-block">Open to applied scientist roles</div>
   </div>
@@ -573,7 +842,7 @@ footer{
   </h1>
 
   <div class="hero-intro">
-    <div class="hero-intro-mark">Making models work outside localhost.</div>
+    <div class="hero-intro-mark">Currently<br><span class="rotator" id="rotator"><span>shipping edge CV</span></span></div>
     <p>
       I build <strong>AI systems</strong> that work outside the lab — from edge-deployed computer vision on poultry farms to enterprise NLP pipelines at S&amp;P Global. I mentor the next wave of agritech engineers at <strong>LiveStockify</strong>, and I write about what I learn along the way.
     </p>
@@ -586,7 +855,18 @@ footer{
 </div>
 </section>
 
-<hr class="rule">
+<!-- ──────────── TICKER ──────────── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker-track">
+    <div class="ticker-item">Making models work outside localhost</div>
+    <div class="ticker-item"><b>923</b> broiler birds tracked live</div>
+    <div class="ticker-item"><b>8</b> RTSP cameras on one Raspberry&nbsp;Pi&nbsp;5</div>
+    <div class="ticker-item">OpenSearch latency <b>9s → 5.5s</b></div>
+    <div class="ticker-item">Moondream 2B at <b>2.4s</b> / image</div>
+    <div class="ticker-item">mAP50 <b>0.454</b> and climbing</div>
+    <div class="ticker-item">Hyderabad → wherever the farm is</div>
+  </div>
+</div>
 
 <!-- ──────────── ABOUT ──────────── -->
 <section id="about">
@@ -598,7 +878,26 @@ footer{
     I care about systems that actually run — on constrained hardware, against messy data, in places far from the cloud. The interesting problems are the ones the demos never show.
   </p>
 
-  <div class="id-grid reveal d1">
+  <div class="numbers reveal d1">
+    <div class="num-cell">
+      <div class="num-val" data-count="5" data-suffix="yrs">0</div>
+      <div class="num-label">Shipping ML<br>in production</div>
+    </div>
+    <div class="num-cell">
+      <div class="num-val" data-count="923">0</div>
+      <div class="num-label">Birds under<br>live watch</div>
+    </div>
+    <div class="num-cell">
+      <div class="num-val" data-count="8">0</div>
+      <div class="num-label">Edge cameras<br>on one Pi</div>
+    </div>
+    <div class="num-cell">
+      <div class="num-val" data-count="39" data-suffix="%">0</div>
+      <div class="num-label">Search latency<br>cut at S&amp;P</div>
+    </div>
+  </div>
+
+  <div class="id-grid reveal d2">
     <div class="id-cell">
       <div class="id-cell-tag"><span class="id-cell-num">01</span>Engineer</div>
       <div class="id-cell-title">S&amp;P Global</div>
@@ -616,7 +915,7 @@ footer{
     </div>
   </div>
 
-  <div class="stack-block reveal d2">
+  <div class="stack-block reveal d3">
     <div class="stack-label">— Tools of the trade</div>
     <div class="stack-pills">
       <span class="spill">Python</span>
@@ -828,26 +1127,241 @@ footer{
   <div class="f-r">Built with intention.</div>
 </footer>
 
+<!-- ──────────── COMMAND PALETTE ──────────── -->
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cmdk-box">
+    <input class="cmdk-input" id="cmdk-input" type="text" placeholder="jump to a section, project, or link…" autocomplete="off" spellcheck="false">
+    <ul class="cmdk-list" id="cmdk-list" role="listbox"></ul>
+    <div class="cmdk-foot">
+      <span>↑↓ navigate</span><span>↵ open</span><span>esc close</span>
+    </div>
+  </div>
+</div>
+
 <script>
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ─── Reveal on scroll ─── */
 const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in') });
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
 },{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-</script>
-<script>
-  // Fetch the latest commit date from your GitHub repo
-  fetch('https://api.github.com/repos/srujohn/srujanos-dev/commits/main')
-    .then(response => response.json())
-    .then(data => {
-      // Get the date and format it nicely
-      const commitDate = new Date(data.commit.committer.date);
-      const options = { year: 'numeric', month: 'short', day: 'numeric' };
-      const formattedDate = commitDate.toLocaleDateString('en-US', options).toUpperCase();
-      
-      // Inject it into the page
-      document.getElementById('last-updated').innerHTML = 'UPDATED &middot; ' + formattedDate;
-    })
-    .catch(error => console.error('Error fetching last update date:', error));
+
+/* ─── Night edition ─── */
+const root = document.documentElement;
+const toggle = document.getElementById('theme-toggle');
+const stored = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+function setTheme(t){
+  root.setAttribute('data-theme', t);
+  toggle.textContent = t === 'dark' ? '☀' : '☾';
+  localStorage.setItem('theme', t);
+}
+setTheme(stored || (prefersDark ? 'dark' : 'light'));
+toggle.addEventListener('click', () => {
+  setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* ─── Reading progress ─── */
+const bar = document.getElementById('progress');
+function onScroll(){
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  // active section in nav
+  let current = '';
+  document.querySelectorAll('section[id]').forEach(s => {
+    const r = s.getBoundingClientRect();
+    if(r.top <= 120 && r.bottom > 120) current = s.id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ─── Counting numbers ─── */
+const numObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
+    const tail = suffix ? '<span class="suffix">' + suffix + '</span>' : '';
+    if(reduced){ el.innerHTML = target + tail; numObs.unobserve(el); return; }
+    const dur = 1300, start = performance.now();
+    (function tick(now){
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.innerHTML = Math.round(target * eased) + tail;
+      if(p < 1) requestAnimationFrame(tick);
+    })(start);
+    numObs.unobserve(el);
+  });
+},{threshold:0.4});
+document.querySelectorAll('.num-val').forEach(el => numObs.observe(el));
+
+/* ─── Seamless ticker ─── */
+const track = document.getElementById('ticker-track');
+track.innerHTML += track.innerHTML;
+
+/* ─── Rotating "currently" ─── */
+const doing = ['shipping edge CV','tuning OpenSearch','fine-tuning Moondream','mentoring 3 engineers','writing it down'];
+const rotator = document.getElementById('rotator');
+let ri = 0;
+if(!reduced){
+  setInterval(() => {
+    ri = (ri + 1) % doing.length;
+    rotator.innerHTML = '<span>' + doing[ri] + '</span>';
+  }, 3200);
+}
+
+/* ─── Hyderabad clock ─── */
+const clock = document.getElementById('local-time');
+function tickClock(){
+  const t = new Date().toLocaleTimeString('en-GB', {timeZone:'Asia/Kolkata', hour:'2-digit', minute:'2-digit'});
+  clock.textContent = 'Hyderabad · ' + t + ' IST';
+}
+tickClock();
+setInterval(tickClock, 30000);
+
+/* ─── Detection boxes over the hero ─── */
+(function(){
+  const cv = document.getElementById('hero-canvas');
+  if(!cv || reduced) return;
+  const ctx = cv.getContext('2d');
+  const labels = ['bird 0.94','bird 0.88','feeder 0.91','bird 0.79','perch 0.83'];
+  let boxes = [], w = 0, h = 0, running = true, stroke = '#B84A2A';
+
+  function palette(){
+    stroke = getComputedStyle(document.documentElement).getPropertyValue('--rust').trim() || '#B84A2A';
+  }
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    boxes = labels.map((l, i) => ({
+      x: Math.random() * (w - 160), y: Math.random() * (h - 120),
+      w: 90 + Math.random() * 90, h: 70 + Math.random() * 70,
+      dx: (Math.random() - 0.5) * 0.32, dy: (Math.random() - 0.5) * 0.32,
+      label: l
+    }));
+  }
+  function box(b){
+    const t = 10; // corner tick length
+    ctx.strokeStyle = stroke; ctx.lineWidth = 1;
+    ctx.globalAlpha = 0.28;
+    ctx.strokeRect(b.x, b.y, b.w, b.h);
+    ctx.globalAlpha = 0.75;
+    ctx.beginPath();
+    [[b.x, b.y, 1, 1], [b.x + b.w, b.y, -1, 1], [b.x, b.y + b.h, 1, -1], [b.x + b.w, b.y + b.h, -1, -1]]
+      .forEach(([cx, cy, sx, sy]) => {
+        ctx.moveTo(cx + t * sx, cy); ctx.lineTo(cx, cy); ctx.lineTo(cx, cy + t * sy);
+      });
+    ctx.stroke();
+    ctx.globalAlpha = 0.6;
+    ctx.font = '9px "JetBrains Mono", monospace';
+    ctx.fillStyle = stroke;
+    ctx.fillText(b.label, b.x, b.y - 6);
+    ctx.globalAlpha = 1;
+  }
+  function frame(){
+    if(!running) return;
+    ctx.clearRect(0, 0, w, h);
+    boxes.forEach(b => {
+      b.x += b.dx; b.y += b.dy;
+      if(b.x < 0 || b.x + b.w > w) b.dx *= -1;
+      if(b.y < 14 || b.y + b.h > h) b.dy *= -1;
+      box(b);
+    });
+    requestAnimationFrame(frame);
+  }
+  palette(); resize(); frame();
+  window.addEventListener('resize', resize);
+  toggle.addEventListener('click', () => setTimeout(palette, 50));
+  new IntersectionObserver(es => {
+    es.forEach(e => {
+      if(e.isIntersecting && !running){ running = true; frame(); }
+      else if(!e.isIntersecting) running = false;
+    });
+  }).observe(cv);
+})();
+
+/* ─── Command palette ─── */
+(function(){
+  const items = [
+    {name:'About', kind:'section', href:'#about'},
+    {name:'Selected work', kind:'section', href:'#work'},
+    {name:'Writing', kind:'section', href:'#writing'},
+    {name:'Nannorio', kind:'section', href:'#nannorio'},
+    {name:'Get in touch', kind:'section', href:'#contact'},
+    {name:'LiveStockify — poultry behavior monitor', kind:'project', href:'https://github.com/Live-stockify/Behaviour_analysis'},
+    {name:'Email me', kind:'link', href:'mailto:heywhatifai@gmail.com'},
+    {name:'LinkedIn', kind:'link', href:'https://www.linkedin.com/in/srujan-sonu/'},
+    {name:'GitHub', kind:'link', href:'https://github.com/Live-stockify'},
+    {name:'Instagram · @nannorio', kind:'link', href:'https://instagram.com/nannorio'},
+    {name:'Toggle night edition', kind:'action', action:() => toggle.click()}
+  ];
+  const modal = document.getElementById('cmdk');
+  const input = document.getElementById('cmdk-input');
+  const list = document.getElementById('cmdk-list');
+  let shown = [], sel = 0;
+
+  if(!/Mac|iPhone|iPad/.test(navigator.platform)) document.getElementById('cmdk-key').textContent = 'ctrl ';
+
+  function render(q){
+    shown = items.filter(i => i.name.toLowerCase().includes(q.toLowerCase()));
+    sel = 0;
+    list.innerHTML = shown.length
+      ? shown.map((i, n) => '<li class="cmdk-item" role="option" data-i="' + n + '" aria-selected="' + (n === 0) + '">' +
+          '<span class="cmdk-name">' + i.name + '</span><span class="cmdk-kind">' + i.kind + '</span></li>').join('')
+      : '<li class="cmdk-empty">Nothing here — try “work” or “email”.</li>';
+  }
+  function mark(){
+    list.querySelectorAll('.cmdk-item').forEach((el, n) => el.setAttribute('aria-selected', n === sel));
+    const cur = list.querySelector('[aria-selected="true"]');
+    if(cur) cur.scrollIntoView({block:'nearest'});
+  }
+  function open(){ modal.classList.add('open'); input.value = ''; render(''); input.focus(); }
+  function close(){ modal.classList.remove('open'); }
+  function run(i){
+    const it = shown[i];
+    if(!it) return;
+    close();
+    if(it.action) return it.action();
+    if(it.href.startsWith('#')) document.querySelector(it.href).scrollIntoView({behavior: reduced ? 'auto' : 'smooth'});
+    else window.open(it.href, it.href.startsWith('mailto') ? '_self' : '_blank', 'noopener');
+  }
+
+  document.getElementById('cmdk-open').addEventListener('click', open);
+  input.addEventListener('input', () => render(input.value));
+  list.addEventListener('click', e => {
+    const li = e.target.closest('.cmdk-item');
+    if(li) run(+li.dataset.i);
+  });
+  document.addEventListener('keydown', e => {
+    if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
+      e.preventDefault();
+      modal.classList.contains('open') ? close() : open();
+      return;
+    }
+    if(!modal.classList.contains('open')) return;
+    if(e.key === 'Escape') close();
+    else if(e.key === 'ArrowDown'){ e.preventDefault(); sel = Math.min(sel + 1, shown.length - 1); mark(); }
+    else if(e.key === 'ArrowUp'){ e.preventDefault(); sel = Math.max(sel - 1, 0); mark(); }
+    else if(e.key === 'Enter'){ e.preventDefault(); run(sel); }
+  });
+  modal.addEventListener('click', e => { if(e.target === modal) close(); });
+})();
+
+/* ─── Last updated, from the repo itself ─── */
+fetch('https://api.github.com/repos/srujohn/srujanos-dev/commits/main')
+  .then(r => r.json())
+  .then(data => {
+    const d = new Date(data.commit.committer.date);
+    const formatted = d.toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'}).toUpperCase();
+    document.getElementById('last-updated').innerHTML = 'UPDATED &middot; ' + formatted;
+  })
+  .catch(err => console.error('Error fetching last update date:', err));
 </script>
 </body>
 </html>
