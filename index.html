@@ -6,14 +6,14 @@
 <title>Srujan — AI Engineer, Mentor, Builder</title>
 
 <!-- SEO -->
-<meta name="description" content="Senior AI/ML Engineer at S&P Global and co-founder at LiveStockify. I build AI systems that work outside the lab — edge computer vision, agritech, enterprise NLP. Based in Hyderabad.">
+<meta name="description" content="Senior AI/ML Engineer building systems that work outside the lab — edge computer vision, agritech, and enterprise NLP. Applied VLM research. Based in Hyderabad.">
 <meta name="author" content="Srujan">
 
 <!-- Open Graph / social previews -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://srujanos.dev">
 <meta property="og:title" content="Srujan — AI Engineer, Mentor, Builder">
-<meta property="og:description" content="Edge AI on real farms. Enterprise NLP at scale. Mentoring the next wave of agritech engineers. From Hyderabad.">
+<meta property="og:description" content="Edge AI on real farms. Enterprise NLP at scale. Applied vision-language research. From Hyderabad.">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
@@ -87,7 +87,7 @@
 }
 html{color-scheme:light}
 html[data-theme="dark"]{color-scheme:dark}
-body,nav,.stack-block,.blog-card,.c-row,.spill,.pchip{
+body,nav,.stack-block,.wr-lead,.wr-row,.c-row,.spill,.pchip{
   transition:background-color 0.4s ease,color 0.4s ease,border-color 0.4s ease;
 }
 
@@ -530,59 +530,112 @@ hr.rule{
 .proj-row:hover .proj-arrow{color:var(--rust);transform:translate(4px,-4px)}
 
 /* ─── WRITING ─── */
-.blog-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:0;
-  border:1px solid var(--ink-faint);
+.wr-dek{
+  font-size:1rem;color:var(--ink-soft);
+  line-height:1.7;font-weight:300;
+  max-width:640px;margin-bottom:2.75rem;
 }
-.blog-card{
-  padding:1.9rem 1.75rem;
-  border-right:1px solid var(--ink-faint);
-  border-bottom:1px solid var(--ink-faint);
-  position:relative;
-  transition:background 0.25s;
-}
-.blog-card:nth-child(2n){border-right:none}
-.blog-card:nth-last-child(-n+2){border-bottom:none}
-.blog-card::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:var(--rust);transform:scaleY(0);transform-origin:top;
-  transition:transform 0.3s ease;
-}
-.blog-card:hover::before{transform:scaleY(1)}
-.blog-card:hover{background:var(--paper-2)}
-.blog-card:hover .blog-title{color:var(--rust)}
-.blog-title{transition:color 0.25s}
-.blog-card:hover .blog-arrow{transform:translate(3px,-3px);color:var(--rust)}
-.blog-meta{
-  display:flex;justify-content:space-between;align-items:baseline;
-  margin-bottom:1.25rem;
-}
-.blog-date{
-  font-family:var(--mono);font-size:0.66rem;
-  color:var(--ink-muted);letter-spacing:0.06em;text-transform:uppercase;
-}
-.blog-tag-mini{
-  font-family:var(--mono);font-size:0.66rem;
-  padding:0.18rem 0.5rem;
-  background:var(--rust);color:var(--paper);
-  letter-spacing:0.03em;
-}
-.blog-title{
-  font-family:var(--display);font-weight:500;
-  font-size:1.2rem;line-height:1.25;
-  letter-spacing:-0.015em;margin-bottom:0.65rem;
-  font-variation-settings:"opsz" 36;
-}
-.blog-excerpt{
-  font-size:0.88rem;color:var(--ink-soft);
-  line-height:1.55;margin-bottom:1.25rem;
-}
-.blog-arrow{
-  font-family:var(--display);font-size:1.1rem;
-  color:var(--ink-muted);transition:all 0.25s;
-  display:inline-block;
-}
+.wr-dek strong{color:var(--ink);font-weight:500}
 
+/* the piece being written first */
+.wr-lead{
+  display:grid;grid-template-columns:135px 1fr;
+  border:1px solid var(--ink);
+  background:var(--paper-2);
+  margin-bottom:3rem;
+  position:relative;overflow:hidden;
+}
+.wr-lead::after{
+  content:'';position:absolute;top:0;right:0;
+  border-width:0 26px 26px 0;border-style:solid;
+  border-color:transparent var(--rust) transparent transparent;
+}
+.wr-lead-side{
+  padding:1.9rem 1.25rem;
+  border-right:1px solid var(--ink-faint);
+  display:flex;flex-direction:column;gap:0.7rem;align-items:flex-start;
+}
+.wr-badge{
+  font-family:var(--mono);font-size:0.62rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);
+  padding:0.28rem 0.6rem;
+}
+.wr-tag{
+  font-family:var(--mono);font-size:0.63rem;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--rust);
+}
+.wr-lead-body{padding:1.9rem 2rem}
+.wr-lead-title{
+  font-family:var(--display);font-weight:500;
+  font-size:clamp(1.25rem,2.4vw,1.7rem);
+  line-height:1.2;letter-spacing:-0.02em;
+  margin-bottom:0.8rem;
+  font-variation-settings:"opsz" 60;
+}
+.wr-lead-title em{font-style:italic;color:var(--rust);font-variation-settings:"WONK" 1}
+.wr-lead-ex{
+  font-size:0.95rem;color:var(--ink-soft);
+  line-height:1.65;margin-bottom:1.1rem;max-width:520px;
+}
+.wr-stat{
+  font-family:var(--mono);font-size:0.66rem;
+  letter-spacing:0.09em;text-transform:uppercase;
+  color:var(--ink-muted);
+  display:flex;gap:0.65rem;flex-wrap:wrap;align-items:center;
+}
+.wr-stat b{color:var(--rust);font-weight:500}
+
+/* contents of the next issue */
+.wr-kicker{
+  font-family:var(--mono);font-size:0.66rem;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--ink-muted);
+  display:flex;align-items:center;gap:0.85rem;
+  margin-bottom:0.5rem;
+}
+.wr-kicker::after{content:'';flex:1;height:1px;background:var(--ink-faint)}
+.wr-list{list-style:none}
+.wr-row{
+  display:grid;grid-template-columns:44px 1fr auto;
+  gap:1.5rem;align-items:baseline;
+  padding:1.35rem 0.5rem 1.35rem 0;
+  border-bottom:1px solid var(--ink-faint);
+  transition:padding 0.25s ease,background 0.25s ease;
+}
+.wr-row:hover{padding-left:0.75rem;background:var(--paper-2)}
+.wr-row:hover .wr-row-title{color:var(--rust)}
+.wr-num{
+  font-family:var(--mono);font-size:0.7rem;
+  color:var(--rust);letter-spacing:0.04em;
+}
+.wr-row-title{
+  font-family:var(--display);font-weight:500;font-size:1.08rem;
+  line-height:1.3;letter-spacing:-0.015em;
+  margin-bottom:0.35rem;
+  font-variation-settings:"opsz" 36;
+  transition:color 0.25s;
+}
+.wr-row-ex{font-size:0.86rem;color:var(--ink-muted);line-height:1.55;max-width:520px}
+.wr-row-tag{
+  font-family:var(--mono);font-size:0.62rem;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-muted);
+  border:1px solid var(--ink-faint);
+  padding:0.2rem 0.5rem;white-space:nowrap;
+}
+.wr-note{
+  margin-top:2.25rem;
+  font-family:var(--display);font-style:italic;
+  font-size:1rem;color:var(--ink-soft);line-height:1.6;
+}
+.wr-note a{
+  color:var(--rust);text-decoration:none;
+  border-bottom:1px solid var(--rust-soft);
+  transition:border-color 0.2s;
+}
+.wr-note a:hover{border-bottom-color:var(--rust)}
 /* ─── NANNORIO ─── */
 .nn-spread{
   display:grid;grid-template-columns:1fr 1fr;
@@ -786,10 +839,16 @@ footer{
   .id-cell:last-child{border-bottom:none}
   .proj-row{grid-template-columns:40px 1fr;gap:1rem}
   .proj-arrow{display:none}
-  .blog-grid,.contact-grid{grid-template-columns:1fr}
-  .blog-card{border-right:none}
-  .blog-card:nth-last-child(-n+2){border-bottom:1px solid var(--ink-faint)}
-  .blog-card:last-child{border-bottom:none}
+  .contact-grid{grid-template-columns:1fr}
+  .wr-lead{grid-template-columns:1fr}
+  .wr-lead-side{
+    border-right:none;border-bottom:1px solid var(--ink-faint);
+    flex-direction:row;align-items:center;gap:0.85rem;
+    padding:1.1rem 1.25rem;
+  }
+  .wr-lead-body{padding:1.5rem 1.25rem}
+  .wr-row{grid-template-columns:34px 1fr;gap:0.9rem}
+  .wr-row-tag{display:none}
   .numbers{grid-template-columns:1fr 1fr}
   .num-cell:nth-child(2n){border-right:none}
   .num-cell:nth-child(-n+2){border-bottom:1px solid var(--ink-faint)}
@@ -832,7 +891,7 @@ footer{
   <div class="hero-meta">
     <div class="hero-meta-block hero-status"><span class="dot"></span><span id="local-time">Hyderabad · IN</span></div>
     <div class="hero-meta-divider"></div>
-    <div class="hero-meta-block">Open to applied scientist roles</div>
+    <div class="hero-meta-block">Open to research-focused work</div>
   </div>
 
   <h1>
@@ -844,13 +903,13 @@ footer{
   <div class="hero-intro">
     <div class="hero-intro-mark">Currently<br><span class="rotator" id="rotator"><span>shipping edge CV</span></span></div>
     <p>
-      I build <strong>AI systems</strong> that work outside the lab — from edge-deployed computer vision on poultry farms to enterprise NLP pipelines at S&amp;P Global. I mentor the next wave of agritech engineers at <strong>LiveStockify</strong>, and I write about what I learn along the way.
+      I build <strong>AI systems</strong> that work outside the lab — from edge-deployed computer vision on poultry farms to enterprise NLP pipelines at scale. I care as much about the engineers who keep those systems running as about the models inside them, and I write about what I learn along the way.
     </p>
   </div>
 
   <div class="hero-actions">
     <a href="#work" class="cta-primary">explore my work</a>
-    <a href="#writing" class="cta-secondary">read the blog</a>
+    <a href="#writing" class="cta-secondary">what i'm writing</a>
   </div>
 </div>
 </section>
@@ -861,7 +920,7 @@ footer{
     <div class="ticker-item">Making models work outside localhost</div>
     <div class="ticker-item"><b>923</b> broiler birds tracked live</div>
     <div class="ticker-item"><b>8</b> RTSP cameras on one Raspberry&nbsp;Pi&nbsp;5</div>
-    <div class="ticker-item">OpenSearch latency <b>9s → 5.5s</b></div>
+    <div class="ticker-item">Vector search <b>~40%</b> faster</div>
     <div class="ticker-item">Moondream 2B at <b>2.4s</b> / image</div>
     <div class="ticker-item">mAP50 <b>0.454</b> and climbing</div>
     <div class="ticker-item">Hyderabad → wherever the farm is</div>
@@ -893,7 +952,7 @@ footer{
     </div>
     <div class="num-cell">
       <div class="num-val" data-count="39" data-suffix="%">0</div>
-      <div class="num-label">Search latency<br>cut at S&amp;P</div>
+      <div class="num-label">Search latency<br>cut in production</div>
     </div>
   </div>
 
@@ -905,13 +964,13 @@ footer{
     </div>
     <div class="id-cell">
       <div class="id-cell-tag"><span class="id-cell-num">02</span>Mentor</div>
-      <div class="id-cell-title">LiveStockify</div>
-      <div class="id-cell-desc">Co-founder and mentor. Guide a team of engineers building AI-powered poultry behavioral monitoring at the edge — agritech meets deep learning, live on real farms.</div>
+      <div class="id-cell-title">Bringing engineers up</div>
+      <div class="id-cell-desc">The gap between a notebook and a system that runs unattended is mostly craft, not theory. I spend a lot of time on the unglamorous half — deployment habits, failure modes, and reading logs at 3am.</div>
     </div>
     <div class="id-cell">
       <div class="id-cell-tag"><span class="id-cell-num">03</span>Builder</div>
       <div class="id-cell-title">Research &amp; beyond</div>
-      <div class="id-cell-desc">Targeting Applied Scientist roles at Amazon Science, Microsoft MAI, and Sarvam AI. Publishing VLM work on HuggingFace and arXiv workshop tracks.</div>
+      <div class="id-cell-desc">Applied vision-language research for agriculture — LoRA fine-tuning on a small VLM, with an arXiv workshop submission and a HuggingFace release in progress.</div>
     </div>
   </div>
 
@@ -952,7 +1011,7 @@ footer{
       <div class="proj-body">
         <div class="proj-meta">Agritech · Edge AI · Startup</div>
         <div class="proj-name">LiveStockify — <em>poultry behavior monitor</em></div>
-        <div class="proj-desc">End-to-end YOLOv8 system detecting Eating, Drinking, Sitting, and Standing across 923 broiler birds on 8 RTSP cameras. Live on Raspberry Pi 5 via Tailscale VPN. FastAPI backend with API key auth. Mentoring three engineers building on top of this foundation.</div>
+        <div class="proj-desc">End-to-end YOLOv8 system detecting Eating, Drinking, Sitting, and Standing across 923 broiler birds on 8 RTSP cameras. Live on Raspberry Pi 5 via Tailscale VPN. FastAPI backend with API key auth, built to survive bad connectivity and keep running unattended.</div>
         <div class="proj-chips">
           <span class="pchip">YOLOv8</span>
           <span class="pchip">Raspberry Pi 5</span>
@@ -969,8 +1028,8 @@ footer{
       <div class="proj-num">→ 02</div>
       <div class="proj-body">
         <div class="proj-meta">Enterprise · AWS · NLP</div>
-        <div class="proj-name">Contract Terms Tracker — <em>S&amp;P Global</em></div>
-        <div class="proj-desc">AWS Step Functions pipeline integrating Lambda, OpenSearch vector search, and Azure OpenAI. Reduced search latency from 9s to 5.5s via concurrent LLM summarization, embedding caching, smart k-amplification, and ef_search tuning. Comprehensive S3 failure tagging across all pipeline lambdas.</div>
+        <div class="proj-name">Document intelligence — <em>vector search at scale</em></div>
+        <div class="proj-desc">A Step Functions pipeline over Lambda, OpenSearch vector search, and Azure OpenAI, serving retrieval across a large enterprise document corpus. Cut end-to-end search latency by roughly 40% through concurrent LLM summarization, embedding caching, k-amplification, and ef_search tuning — plus systematic failure tagging so a bad run could always be traced to its stage.</div>
         <div class="proj-chips">
           <span class="pchip">AWS Lambda</span>
           <span class="pchip">OpenSearch</span>
@@ -1012,44 +1071,63 @@ footer{
   <div class="section-num">§ 03 — Writing</div>
   <h2 class="section-title">Thinking <em>out loud</em>.</h2>
 
-  <div class="blog-grid">
-    <div class="blog-card reveal">
-      <div class="blog-meta">
-        <span class="blog-date">— Coming soon</span>
-        <span class="blog-tag-mini">edge ai</span>
-      </div>
-      <div class="blog-title">Deploying YOLOv8 on Raspberry Pi 5 — what nobody tells you</div>
-      <div class="blog-excerpt">RTSP streams, Tailscale VPN, and 923 live chickens. What I learned about real edge deployment.</div>
-      <span class="blog-arrow">soon</span>
+  <p class="wr-dek">
+    Nothing published yet — so here's the running order instead. Each piece comes out of a system
+    I've actually had to keep alive in production, which means <strong>they'll read as build notes,
+    not think-pieces</strong>. The first one is being written now.
+  </p>
+
+  <div class="wr-lead reveal">
+    <div class="wr-lead-side">
+      <span class="wr-badge">Writing now</span>
+      <span class="wr-tag">edge ai</span>
     </div>
-    <div class="blog-card reveal d1">
-      <div class="blog-meta">
-        <span class="blog-date">— Coming soon</span>
-        <span class="blog-tag-mini">engineering</span>
+    <div class="wr-lead-body">
+      <h3 class="wr-lead-title">Deploying YOLOv8 on a Raspberry Pi 5 — <em>what nobody tells you</em></h3>
+      <p class="wr-lead-ex">
+        RTSP streams that drop at 3am, a Tailscale tunnel to a farm with bad connectivity, and 923 live
+        birds that refuse to hold still for the camera. The gap between a notebook that hits good mAP
+        and a box that survives a week unattended in a shed.
+      </p>
+      <div class="wr-stat">
+        <span><b>923</b> birds</span>·<span><b>8</b> cameras</span>·<span><b>1</b> Pi</span>
       </div>
-      <div class="blog-title">Cutting OpenSearch latency in half: a field guide</div>
-      <div class="blog-excerpt">How concurrent LLM calls, embedding caches, and ef_search tuning took us from 9s to 5.5s.</div>
-      <span class="blog-arrow">soon</span>
-    </div>
-    <div class="blog-card reveal d1">
-      <div class="blog-meta">
-        <span class="blog-date">— Coming soon</span>
-        <span class="blog-tag-mini">mentorship</span>
-      </div>
-      <div class="blog-title">Mentoring junior engineers in a startup — what actually works</div>
-      <div class="blog-excerpt">Lessons from building and guiding a small agritech CV team from zero to live farm deployment.</div>
-      <span class="blog-arrow">soon</span>
-    </div>
-    <div class="blog-card reveal d2">
-      <div class="blog-meta">
-        <span class="blog-date">— Coming soon</span>
-        <span class="blog-tag-mini">career</span>
-      </div>
-      <div class="blog-title">The 2026 AI/ML job market in Hyderabad — honest research</div>
-      <div class="blog-excerpt">Staying vs. leaving, research visibility, and targeting Applied Scientist roles at the big names.</div>
-      <span class="blog-arrow">soon</span>
     </div>
   </div>
+
+  <div class="wr-kicker reveal">In the next issue</div>
+  <ol class="wr-list">
+    <li class="wr-row reveal">
+      <span class="wr-num">02</span>
+      <div>
+        <h3 class="wr-row-title">Cutting OpenSearch latency in half: a field guide</h3>
+        <p class="wr-row-ex">How concurrent LLM summarization, embedding caches, k-amplification and ef_search tuning took roughly 40% off a production retrieval pipeline.</p>
+      </div>
+      <span class="wr-row-tag">engineering</span>
+    </li>
+    <li class="wr-row reveal d1">
+      <span class="wr-num">03</span>
+      <div>
+        <h3 class="wr-row-title">Mentoring junior engineers on production CV — what actually works</h3>
+        <p class="wr-row-ex">What moved the needle taking engineers from notebooks to systems that run unattended — and the habits that mattered more than the code review.</p>
+      </div>
+      <span class="wr-row-tag">mentorship</span>
+    </li>
+    <li class="wr-row reveal d2">
+      <span class="wr-num">04</span>
+      <div>
+        <h3 class="wr-row-title">The 2026 AI/ML research job market — an honest look</h3>
+        <p class="wr-row-ex">Why research visibility compounds, what applied-science screens actually filter on, and how that looks from Hyderabad.</p>
+      </div>
+      <span class="wr-row-tag">career</span>
+    </li>
+  </ol>
+
+  <p class="wr-note">
+    The first one lands on this page. If you'd like a nudge when it does —
+    <a href="mailto:heywhatifai@gmail.com">say so by email</a> or
+    <a href="https://www.linkedin.com/in/srujan-sonu/" target="_blank" rel="noopener noreferrer">follow along on LinkedIn</a>.
+  </p>
 </div>
 </section>
 
